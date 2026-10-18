@@ -1,52 +1,46 @@
-# QA portfolio project: API and UI checks
+# QA Testing Portfolio
 
-Portfolio project for a QA Intern / Junior QA application. It demonstrates API testing, basic UI regression, SQL data checks, test documentation, and CI configuration.
+A single runnable QA portfolio project combining API, UI, and database testing examples: Postman + Newman, Python + pytest, Playwright, SQL, and GitHub Actions.
 
-The complete source tree is available in the repository's `qa-api-portfolio.zip` archive; download and extract it to run the checks locally.
+## Project source
 
-## What is included
+The complete source tree (including the Postman collection, pytest suite, UI smoke test, SQL examples, reports, lockfile, and CI workflows) is available in [`qa-api-testing-portfolio-merged.zip`](./qa-api-testing-portfolio-merged.zip). Download and extract it to run locally. The standalone Restful Booker repository is now consolidated into this portfolio archive.
 
-- **Postman + Newman:** ordered Restful Booker CRUD flow with status/body assertions, auth token and booking ID variables, negative authorization checks, and cleanup of the booking created by the run.
-- **Python + pytest + requests + JSON Schema:** API tests with fixtures, unique test data, parameterization, authorized/unauthorized cases, boundary values, response-schema validation, and cleanup.
-- **Playwright:** UI smoke test for a training storefront: login, add a product to cart, proceed through checkout, and verify confirmation.
-- **SQL:** example order-consistency checks in `sql/order_consistency_checks.sql`. These demonstrate validation queries for a conventional test schema; the public UI demo does not expose its database.
-- **CI:** GitHub Actions workflow runs API, Postman, and UI suites and uploads HTML/JUnit reports.
-- **Test cases and exploratory note:** `reports/test-cases.md` and `reports/exploratory-check.md`.
-- **UI scenarios:** `reports/ui-test-cases.md`.
+## Test coverage
+
+- **Restful Booker API:** sequential auth and CRUD Postman flow; token and booking ID are passed automatically; response status, JSON fields, and data types are checked; unauthorized access, invalid IDs, required-field omission, malformed dates, and boundary values are covered. The flow removes only its own booking and verifies it is gone.
+- **Python API suite:** pytest, requests, fixtures, JSON Schema, negative/unauthorized cases, boundary values, and cleanup.
+- **UI smoke test:** Playwright login-to-checkout flow against the SauceDemo training storefront.
+- **SQL examples:** illustrative order consistency queries for a conventional test schema.
+- **CI:** GitHub Actions workflows run the API/Postman checks and UI suite and publish test reports as workflow artifacts.
+
+The public Postman documentation is available [here](https://documenter.getpostman.com/view/59042488/2sBYHSxg8z).
 
 ## Run locally
 
-Python 3.12+, Node.js 22+, and Chromium are required.
+Requirements: Python 3.12+, Node.js 22+, pnpm, and Chromium for UI checks.
 
 ```bash
+unzip qa-api-testing-portfolio-merged.zip
+cd qa-api-portfolio
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate        # Windows: .venv\\Scripts\\activate
 python -m pip install -r requirements.txt
 python -m playwright install chromium
 pnpm install --frozen-lockfile
 mkdir -p artifacts
-python -m pytest api_tests -m api --html=artifacts/api-report.html --self-contained-html --junitxml=artifacts/api-junit.xml
-pnpm test:postman
-python -m pytest ui_tests -m ui --html=artifacts/ui-report.html --self-contained-html --junitxml=artifacts/ui-junit.xml
 ```
 
-The API suite creates and deletes only its own demo bookings. The UI suite uses SauceDemo's documented public training credentials (`standard_user` / `secret_sauce`) and places a test order in that training environment.
-
-Override demo URLs if needed:
+Run checks independently:
 
 ```bash
-RESTFUL_BOOKER_URL=https://restful-booker.herokuapp.com python -m pytest api_tests -m api
-UI_BASE_URL=https://www.saucedemo.com python -m pytest ui_tests -m ui
+python -m pytest api_tests -m api
+pnpm test:postman
+python -m pytest ui_tests -m ui
 ```
 
-## Project boundaries
+Import `postman/restful-booker.collection.json` into Postman to inspect or run the collection. `postman/restful-booker.environment.json` is optional.
 
-- Public demo services can be unavailable or rate-limited; a service outage is not automatically a product defect.
-- SQL examples are illustrative because SauceDemo's database is not accessible to test users.
-- The OWASP Juice Shop demo was checked on 2026-10-18 but returned an application error. No product bug was filed or claimed; details are recorded in `reports/exploratory-check.md`.
-- The GitHub Actions workflow is ready in `.github/workflows/qa.yml`. It will run after this folder is pushed to a GitHub repository; it has not run on GitHub yet.
-- The Postman export in this folder is a separate, importable enhanced collection based on the scenarios in the previously shared public documentation; it does not modify that published Postman page.
+## Notes
 
-## Skills demonstrated
-
-Postman, Newman, REST API, HTTP, JSON, Python, pytest, requests, Playwright, SQL, Git, GitHub Actions, test design, boundary-value testing, test data setup/cleanup, HTML and JUnit reports.
+These checks use public training services and depend on their availability and current demo credentials. SQL is illustrative because the storefront does not expose a database. Malformed-input behavior observed in the Restful Booker demo is documented as behavior of that demo API, not as a claim about production systems.
