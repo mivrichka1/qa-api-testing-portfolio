@@ -1,10 +1,10 @@
 # QA Testing Portfolio
 
-A single runnable QA portfolio project combining API, UI, and database testing examples: Postman + Newman, Python + pytest, Playwright, SQL, and GitHub Actions.
+A single QA portfolio project combining API, UI, and database testing examples: Postman + Newman, Python + pytest, Playwright, SQL, and GitHub Actions.
 
 ## Project source
 
-The complete source tree (including the Postman collection, pytest suite, UI smoke test, SQL examples, reports, lockfile, and CI workflows) is available in [`qa-api-testing-portfolio-merged.zip`](./qa-api-testing-portfolio-merged.zip). Download and extract it to run locally. The standalone Restful Booker repository is now consolidated into this portfolio archive.
+Download the complete runnable source tree, including the Postman collection, pytest suite, UI smoke test, SQL examples, reports, lockfile, and CI workflows: [qa-api-testing-portfolio-unified.zip](./qa-api-testing-portfolio-unified.zip). This archive consolidates the standalone Restful Booker project into this portfolio.
 
 ## Test coverage
 
@@ -14,17 +14,17 @@ The complete source tree (including the Postman collection, pytest suite, UI smo
 - **SQL examples:** illustrative order consistency queries for a conventional test schema.
 - **CI:** GitHub Actions workflows run the API/Postman checks and UI suite and publish test reports as workflow artifacts.
 
-The public Postman documentation is available [here](https://documenter.getpostman.com/view/59042488/2sBYHSxg8z).
+Public Postman documentation: https://documenter.getpostman.com/view/59042488/2sBYHSxg8z
 
 ## Run locally
 
 Requirements: Python 3.12+, Node.js 22+, pnpm, and Chromium for UI checks.
 
 ```bash
-unzip qa-api-testing-portfolio-merged.zip
+unzip qa-api-testing-portfolio-unified.zip
 cd qa-api-portfolio
 python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\\Scripts\\activate
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
 python -m playwright install chromium
 pnpm install --frozen-lockfile
@@ -39,7 +39,7 @@ pnpm test:postman
 python -m pytest ui_tests -m ui
 ```
 
-Import `postman/restful-booker.collection.json` into Postman to inspect or run the collection. `postman/restful-booker.environment.json` is optional.
+Import `postman/restful-booker.collection.json` into Postman to inspect or run the collection. The environment export is optional.
 
 ## Notes
 
