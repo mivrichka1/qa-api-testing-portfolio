@@ -1,0 +1,70 @@
+name: Unified QA checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  api-and-postman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Extract project source
+        run: unzip qa-api-testing-portfolio-unified.zip
+      - name: Install Python dependencies
+        run: python -m pip install -r requirements.txt
+        working-directory: qa-api-portfolio
+      - name: Install Node dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: qa-api-portfolio
+      - name: Prepare reports
+        run: mkdir -p artifacts
+        working-directory: qa-api-portfolio
+      - name: Run Python API tests
+        run: python -m pytest api_tests -m api --junitxml=artifacts/api-junit.xml --html=artifacts/api-report.html --self-contained-html
+        working-directory: qa-api-portfolio
+      - name: Run Postman collection with Newman
+        run: pnpm test:postman
+        working-directory: qa-api-portfolio
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-and-postman-reports
+          path: qa-api-portfolio/artifacts/
+
+  ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Extract project source
+        run: unzip qa-api-testing-portfolio-unified.zip
+      - name: Install Python dependencies
+        run: python -m pip install -r requirements.txt
+        working-directory: qa-api-portfolio
+      - name: Install Playwright browser
+        run: python -m playwright install --with-deps chromium
+        working-directory: qa-api-portfolio
+      - name: Prepare reports
+        run: mkdir -p artifacts
+        working-directory: qa-api-portfolio
+      - name: Run UI smoke test
+        run: python -m pytest ui_tests -m ui --junitxml=artifacts/ui-junit.xml --html=artifacts/ui-report.html --self-contained-html
+        working-directory: qa-api-portfolio
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ui-reports
+          path: qa-api-portfolio/artifacts/
