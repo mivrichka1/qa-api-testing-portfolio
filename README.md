@@ -1,27 +1,29 @@
-# QA Testing Portfolio
+# Портфолио QA: API и UI-тестирование
 
-[![QA checks](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml/badge.svg)](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml)
+[![Статус проверок](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml/badge.svg)](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml) · [Все запуски и отчёты GitHub Actions](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml)
 
-API and UI testing examples using Postman/Newman, Python + pytest, Playwright, SQL, and GitHub Actions. The complete runnable source tree is available in the project archive below.
+Учебный проект с примерами тестирования REST API и веб-приложения: Postman/Newman, Python + pytest, Playwright, SQL и GitHub Actions.
 
-## Project source
+## Где лежат файлы
 
-Download and extract [`qa-api-testing-portfolio-unified.zip`](./qa-api-testing-portfolio-unified.zip). It contains the Postman collection, pytest API and UI suites, schema, SQL examples, test reports, and CI workflows.
+Полный запускаемый проект находится в архиве [`qa-api-testing-portfolio-unified.zip`](./qa-api-testing-portfolio-unified.zip), в папке `qa-api-portfolio/` внутри архива. В корне репозитория также доступны Python API-тесты и конфигурационные файлы. В архиве находятся коллекция Postman, UI-тесты, JSON Schema, SQL-примеры, отчёты и workflow для CI.
 
-## Coverage
+После открытия страницы GitHub Actions выберите последний запуск, чтобы увидеть статус отдельных проверок и скачать отчёты из раздела **Artifacts**.
 
-- **REST API:** authenticated CRUD flow, response status and schema checks, unauthorized access, invalid IDs, malformed input, boundary values, and cleanup of test data.
-- **Python API tests:** pytest, requests, fixtures, JSON Schema, negative cases, and cleanup.
-- **UI smoke test:** Playwright login-to-checkout flow against the SauceDemo training storefront.
-- **Test documentation:** test cases, exploratory notes, UI scenarios, and verification notes.
-- **SQL:** illustrative order consistency queries for a conventional schema; these examples have not been run against a live database.
-- **CI:** GitHub Actions runs API, Newman, and UI checks and publishes test reports as workflow artifacts.
+## Что проверяю и какие навыки демонстрирую
 
-Public Postman documentation: [view the collection](https://documenter.getpostman.com/view/59042488/2sBYHSxg8z).
+- REST API: CRUD-сценарии, коды ответов, структура и типы JSON, авторизация, негативные случаи и граничные значения.
+- Python/pytest: фикстуры, параметризация, проверка JSON Schema и очистка созданных тестом данных.
+- Postman/Newman: последовательные запросы, передача токена и ID между шагами, проверки ответов и запуск коллекции из CI.
+- UI/Playwright: smoke-сценарий от входа до завершения оформления заказа на учебном магазине SauceDemo.
+- Тестовая документация: сценарии, тест-кейсы, исследовательские заметки и результаты проверки.
+- SQL: примеры запросов для проверки согласованности заказов; они иллюстративные и не запускались на реальной базе.
 
-## Run locally
+Публичная документация коллекции Postman: [открыть коллекцию](https://documenter.getpostman.com/view/59042488/2sBYHSxg8z).
 
-Requirements: Python 3.12+, Node.js 22+, pnpm 11, and Chromium for UI checks.
+## Запуск проекта
+
+Требуются Python 3.12+, Node.js 22+, pnpm 11 и Chromium для UI-проверки. Сначала распакуйте архив, затем выполните команды из папки `qa-api-portfolio/`:
 
 ```bash
 unzip qa-api-testing-portfolio-unified.zip
@@ -34,7 +36,7 @@ pnpm install --frozen-lockfile
 mkdir -p artifacts
 ```
 
-Run checks independently:
+Запуск проверок по отдельности:
 
 ```bash
 python -m pytest api_tests -m api
@@ -42,8 +44,8 @@ pnpm test:postman
 python -m pytest ui_tests -m ui
 ```
 
-To inspect the API suite in Postman, import `postman/restful-booker.collection.json`; the exported environment is optional.
+Чтобы посмотреть коллекцию вручную, импортируйте `postman/restful-booker.collection.json` в Postman. Файл окружения можно импортировать отдельно.
 
-## Scope and limitations
+## Ограничения
 
-The checks call public training services, so results depend on their availability and current demo behavior. SQL is illustrative because the storefront does not expose a database. Malformed-input behavior documented here describes the demo API only, not production systems.
+Проверки обращаются к публичным учебным сервисам, поэтому результат зависит от их доступности и текущего поведения. Тесты API удаляют созданные ими записи. SQL-примеры не выполняются против базы магазина. Описанные ответы Restful Booker относятся к учебному API, а не к промышленным системам.
