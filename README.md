@@ -9,7 +9,7 @@
 - `api_tests/` — pytest проверки RESTful Booker: CRUD, авторизация, негативные и граничные сценарии.
 - `postman/` — коллекция и окружение Restful Booker; запуск через Newman.
 - `schemas/booking.schema.json` — JSON Schema ответа API.
-- `ui_tests/` — шесть pytest/Playwright сценариев SauceDemo: успешный заказ, неверный вход, три обязательных поля checkout, удаление товара. При падении UI-теста CI сохраняет screenshot и trace в артефактах.
+- `ui_tests/` — 6 pytest/Playwright случаев SauceDemo: оформление заказа, неверный вход, три варианта валидации полей checkout и удаление товара. Валидный вход проверяется внутри сценария оформления заказа. При падении UI-теста CI сохраняет screenshot и trace в артефактах.
 - [`reports/shop-testing.md`](reports/shop-testing.md) — тест-план, чек-лист, кейсы, эквивалентные классы, границы, таблица решений, результаты исследовательского тестирования и баг-репорт SD-BUG-01.
 - `sql/order_consistency_checks.sql` — примеры SELECT, JOIN, фильтрации и агрегатов для типовой схемы заказов.
 - `.github/workflows/portfolio.yml` — GitHub Actions для API, Newman и UI suites.
