@@ -1,24 +1,27 @@
 # QA Testing Portfolio
 
-A single QA portfolio project combining API, UI, and database testing examples: Postman + Newman, Python + pytest, Playwright, SQL, and GitHub Actions.
+[![QA checks](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml/badge.svg)](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml)
+
+API and UI testing examples using Postman/Newman, Python + pytest, Playwright, SQL, and GitHub Actions. The complete runnable source tree is available in the project archive below.
 
 ## Project source
 
-Download the complete runnable source tree, including the Postman collection, pytest suite, UI smoke test, SQL examples, reports, lockfile, and CI workflows: [qa-api-testing-portfolio-unified.zip](./qa-api-testing-portfolio-unified.zip). This archive consolidates the standalone Restful Booker project into this portfolio.
+Download and extract [`qa-api-testing-portfolio-unified.zip`](./qa-api-testing-portfolio-unified.zip). It contains the Postman collection, pytest API and UI suites, schema, SQL examples, test reports, and CI workflows.
 
-## Test coverage
+## Coverage
 
-- **Restful Booker API:** sequential auth and CRUD Postman flow; token and booking ID are passed automatically; response status, JSON fields, and data types are checked; unauthorized access, invalid IDs, required-field omission, malformed dates, and boundary values are covered. The flow removes only its own booking and verifies it is gone.
-- **Python API suite:** pytest, requests, fixtures, JSON Schema, negative/unauthorized cases, boundary values, and cleanup.
+- **REST API:** authenticated CRUD flow, response status and schema checks, unauthorized access, invalid IDs, malformed input, boundary values, and cleanup of test data.
+- **Python API tests:** pytest, requests, fixtures, JSON Schema, negative cases, and cleanup.
 - **UI smoke test:** Playwright login-to-checkout flow against the SauceDemo training storefront.
-- **SQL examples:** illustrative order consistency queries for a conventional test schema.
-- **CI:** GitHub Actions workflows run the API/Postman checks and UI suite and publish test reports as workflow artifacts.
+- **Test documentation:** test cases, exploratory notes, UI scenarios, and verification notes.
+- **SQL:** illustrative order consistency queries for a conventional schema; these examples have not been run against a live database.
+- **CI:** GitHub Actions runs API, Newman, and UI checks and publishes test reports as workflow artifacts.
 
-Public Postman documentation: https://documenter.getpostman.com/view/59042488/2sBYHSxg8z
+Public Postman documentation: [view the collection](https://documenter.getpostman.com/view/59042488/2sBYHSxg8z).
 
 ## Run locally
 
-Requirements: Python 3.12+, Node.js 22+, pnpm, and Chromium for UI checks.
+Requirements: Python 3.12+, Node.js 22+, pnpm 11, and Chromium for UI checks.
 
 ```bash
 unzip qa-api-testing-portfolio-unified.zip
@@ -39,8 +42,8 @@ pnpm test:postman
 python -m pytest ui_tests -m ui
 ```
 
-Import `postman/restful-booker.collection.json` into Postman to inspect or run the collection. The environment export is optional.
+To inspect the API suite in Postman, import `postman/restful-booker.collection.json`; the exported environment is optional.
 
-## Notes
+## Scope and limitations
 
-These checks use public training services and depend on their availability and current demo credentials. SQL is illustrative because the storefront does not expose a database. Malformed-input behavior observed in the Restful Booker demo is documented as behavior of that demo API, not as a claim about production systems.
+The checks call public training services, so results depend on their availability and current demo behavior. SQL is illustrative because the storefront does not expose a database. Malformed-input behavior documented here describes the demo API only, not production systems.
