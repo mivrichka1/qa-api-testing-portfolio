@@ -2,32 +2,29 @@
 
 [![Статус проверок](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml/badge.svg)](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml) · [Все запуски и отчёты GitHub Actions](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml)
 
-Учебный проект с примерами тестирования REST API и веб-приложения: Postman/Newman, Python + pytest, Playwright, SQL и GitHub Actions.
+Учебный проект с ручными и автоматизированными проверками REST API и веб-приложения. Исходники разложены по папкам репозитория — скачивать ZIP для просмотра кода не нужно.
 
-## Где лежат файлы
+## Структура проекта
 
-В корне репозитория доступны исходники Python API-тестов (api_tests/), UI smoke-теста (ui_tests/), JSON Schema (schemas/booking.schema.json) и файлы конфигурации. Полный запускаемый проект находится в архиве [qa-api-testing-portfolio-unified.zip](./qa-api-testing-portfolio-unified.zip), в папке qa-api-portfolio/ внутри архива. В архиве также находятся коллекция Postman, SQL-примеры, отчёты и конфигурация CI.
+- api_tests/ — Python-тесты REST API на pytest: CRUD, авторизация, негативные и граничные сценарии.
+- schemas/booking.schema.json — JSON Schema ответа API.
+- postman/ — коллекция и окружение для Restful Booker; запуск через Newman.
+- ui_tests/ — Playwright smoke-тест оформления заказа в SauceDemo.
+- reports/ — тест-кейсы, сценарии UI, исследовательские заметки и результат проверки.
+- sql/ — пример запросов для проверки согласованности заказов.
+- .github/workflows/portfolio.yml — запуск проверок в GitHub Actions.
 
-Workflow GitHub Actions запускает проверки из архива. Откройте страницу запусков выше, выберите последний запуск, чтобы увидеть статус проверок и скачать отчёты из раздела **Artifacts**.
+## Навыки и проверки
 
-## Что проверяю и какие навыки демонстрирую
+Проверяю коды ответов и структуру JSON, CRUD-сценарии, авторизацию, негативные случаи и граничные значения. В API-тестах использую фикстуры pytest, проверку JSON Schema и очистку созданных тестом данных. В Postman/Newman — последовательное выполнение запросов, передачу токена и ID между шагами. UI-тест проходит путь от входа до подтверждения заказа. CI запускает API, Postman/Newman и UI-проверки; отчёты доступны в Artifacts последнего запуска.
 
-- REST API: CRUD-сценарии, коды ответов, структура и типы JSON, авторизация, негативные случаи и граничные значения.
-- Python/pytest: фикстуры, параметризация, проверка JSON Schema и очистка созданных тестом данных.
-- Postman/Newman: последовательные запросы, передача токена и ID между шагами, проверки ответов и запуск коллекции из CI.
-- UI/Playwright: smoke-сценарий от входа до завершения оформления заказа на учебном магазине SauceDemo.
-- Тестовая документация: сценарии, тест-кейсы, исследовательские заметки и результаты проверки.
-- SQL: примеры запросов для проверки согласованности заказов; они иллюстративные и не запускались на реальной базе.
+Публичная документация коллекции Postman: [открыть](https://documenter.getpostman.com/view/59042488/2sBYHSxg8z).
 
-Публичная документация коллекции Postman: [открыть коллекцию](https://documenter.getpostman.com/view/59042488/2sBYHSxg8z).
+## Запуск
 
-## Запуск проекта
-
-Требуются Python 3.12+, Node.js 22+, pnpm 11 и Chromium для UI-проверки. Для полного запуска распакуйте архив и выполните команды из папки qa-api-portfolio/:
+Требуются Python 3.12+, Node.js 22+, pnpm 11 и Chromium.
 
 ~~~bash
-unzip qa-api-testing-portfolio-unified.zip
-cd qa-api-portfolio
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
@@ -44,8 +41,8 @@ pnpm test:postman
 python -m pytest ui_tests -m ui
 ~~~
 
-Чтобы посмотреть коллекцию вручную, импортируйте postman/restful-booker.collection.json из распакованного проекта в Postman. Файл окружения можно импортировать отдельно.
+Коллекцию для ручного просмотра можно импортировать из postman/restful-booker.collection.json. ZIP в корне содержит архивную копию полного проекта.
 
 ## Ограничения
 
-Проверки обращаются к публичным учебным сервисам, поэтому результат зависит от их доступности и текущего поведения. Тесты API удаляют созданные ими записи. SQL-примеры не выполняются против базы магазина. Описанные ответы Restful Booker относятся к учебному API, а не к промышленным системам.
+Проверки обращаются к публичным учебным сервисам, поэтому результат зависит от их доступности и текущего поведения. Тесты удаляют только созданные ими данные. SQL-файл содержит иллюстративные запросы и не запускался против реальной базы данных.
