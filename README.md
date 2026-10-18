@@ -1,28 +1,28 @@
 # Портфолио QA: API и UI-тестирование
 
-[![Статус проверок](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml/badge.svg)](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml) · [Все запуски и отчёты GitHub Actions](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml)
+[![Статус проверок](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml/badge.svg)](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml) · [Все запуски и отчёты CI](https://github.com/mivrichka1/qa-api-testing-portfolio/actions/workflows/portfolio.yml)
 
-Учебный проект с ручными и автоматизированными проверками REST API и веб-приложения. Исходники разложены по папкам репозитория — скачивать ZIP для просмотра кода не нужно.
+Учебный проект с ручными и автоматизированными проверками REST API и веб-магазина.
 
-## Структура проекта
+## Состав проекта
 
-- api_tests/ — Python-тесты REST API на pytest: CRUD, авторизация, негативные и граничные сценарии.
-- schemas/booking.schema.json — JSON Schema ответа API.
-- postman/ — коллекция и окружение для Restful Booker; запуск через Newman.
-- ui_tests/ — Playwright smoke-тест оформления заказа в SauceDemo.
-- reports/ — тест-кейсы, сценарии UI, исследовательские заметки и результат проверки.
-- sql/ — пример запросов для проверки согласованности заказов.
-- .github/workflows/portfolio.yml — запуск проверок в GitHub Actions.
+- `api_tests/` — pytest проверки RESTful Booker: CRUD, авторизация, негативные и граничные сценарии.
+- `postman/` — коллекция и окружение Restful Booker; запуск через Newman.
+- `schemas/booking.schema.json` — JSON Schema ответа API.
+- `ui_tests/` — шесть pytest/Playwright сценариев SauceDemo: успешный заказ, неверный вход, три обязательных поля checkout, удаление товара. При падении UI-теста CI сохраняет screenshot и trace в артефактах.
+- [`reports/shop-testing.md`](reports/shop-testing.md) — тест-план, чек-лист, кейсы, эквивалентные классы, границы, таблица решений, результаты исследовательского тестирования и баг-репорт SD-BUG-01.
+- `sql/order_consistency_checks.sql` — примеры SELECT, JOIN, фильтрации и агрегатов для типовой схемы заказов.
+- `.github/workflows/portfolio.yml` — GitHub Actions для API, Newman и UI suites.
 
-## Навыки и проверки
+## Результат исследовательской проверки
 
-Проверяю коды ответов и структуру JSON, CRUD-сценарии, авторизацию, негативные случаи и граничные значения. В API-тестах использую фикстуры pytest, проверку JSON Schema и очистку созданных тестом данных. В Postman/Newman — последовательное выполнение запросов, передачу токена и ID между шагами. UI-тест проходит путь от входа до подтверждения заказа. CI запускает API, Postman/Newman и UI-проверки; отчёты доступны в Artifacts последнего запуска.
+Выполнен учебный заказ: Sauce Labs Backpack за `$29.99`, налог `$2.40`, итог `$32.39`; страница показала “Thank you for your order!”. Это тестовая симуляция без реальной оплаты. Под `problem_user` воспроизводится одинаковая фотография собаки у карточек товаров; баг описан с областью действия и серьёзностью в отчёте. В короткой сессии под `standard_user` подтверждённых дефектов не найдено.
 
-Публичная документация коллекции Postman: [открыть](https://documenter.getpostman.com/view/59042488/2sBYHSxg8z).
+Интерактивный браузер не предоставил DevTools Network/HAR и логи Console. Поэтому сетевые запросы, статусы ответов и ошибки консоли не отмечены как проверенные. SQL использует отдельную иллюстративную учебную схему и никак не связан с базой SauceDemo; результаты запросов не сверяются с заказом в UI.
 
 ## Запуск
 
-Требуются Python 3.12+, Node.js 22+, pnpm 11 и Chromium.
+Требуются Python 3.12+, Node.js 22+, pnpm 11 и Chromium. Из корня репозитория:
 
 ~~~bash
 python -m venv .venv
@@ -33,7 +33,7 @@ pnpm install --frozen-lockfile
 mkdir -p artifacts
 ~~~
 
-Запуск проверок по отдельности:
+Запустить наборы отдельно:
 
 ~~~bash
 python -m pytest api_tests -m api
@@ -41,8 +41,4 @@ pnpm test:postman
 python -m pytest ui_tests -m ui
 ~~~
 
-Коллекцию для ручного просмотра можно импортировать из postman/restful-booker.collection.json. ZIP в корне содержит архивную копию полного проекта.
-
-## Ограничения
-
-Проверки обращаются к публичным учебным сервисам, поэтому результат зависит от их доступности и текущего поведения. Тесты удаляют только созданные ими данные. SQL-файл содержит иллюстративные запросы и не запускался против реальной базы данных.
+Отчёты HTML/JUnit и UI traces доступны в Artifacts последнего GitHub Actions запуска. Демо-сервисы могут быть недоступны или изменить поведение. Коллекция API: [Postman documentation](https://documenter.getpostman.com/view/59042488/2sBYHSxg8z).
