@@ -1,0 +1,13 @@
+{
+  "id": "2e85df1c-41dc-4f15-9bbb-0aa36c8e4b18",
+  "name": "Restful Booker — public demo",
+  "values": [
+    {"key": "baseUrl", "value": "https://restful-booker.herokuapp.com", "enabled": true},
+    {"key": "username", "value": "admin", "enabled": true},
+    {"key": "password", "value": "password123", "enabled": true},
+    {"key": "token", "value": "", "enabled": true},
+    {"key": "bookingId", "value": "", "enabled": true}
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_using": "Postman/11"
+}
