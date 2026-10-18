@@ -6,9 +6,9 @@
 
 ## Где лежат файлы
 
-Полный запускаемый проект находится в архиве [`qa-api-testing-portfolio-unified.zip`](./qa-api-testing-portfolio-unified.zip), в папке `qa-api-portfolio/` внутри архива. В корне репозитория также доступны Python API-тесты и конфигурационные файлы. В архиве находятся коллекция Postman, UI-тесты, JSON Schema, SQL-примеры, отчёты и workflow для CI.
+В корне репозитория доступны исходники Python API-тестов (api_tests/), UI smoke-теста (ui_tests/), JSON Schema (schemas/booking.schema.json) и файлы конфигурации. Полный запускаемый проект находится в архиве [qa-api-testing-portfolio-unified.zip](./qa-api-testing-portfolio-unified.zip), в папке qa-api-portfolio/ внутри архива. В архиве также находятся коллекция Postman, SQL-примеры, отчёты и конфигурация CI.
 
-После открытия страницы GitHub Actions выберите последний запуск, чтобы увидеть статус отдельных проверок и скачать отчёты из раздела **Artifacts**.
+Workflow GitHub Actions запускает проверки из архива. Откройте страницу запусков выше, выберите последний запуск, чтобы увидеть статус проверок и скачать отчёты из раздела **Artifacts**.
 
 ## Что проверяю и какие навыки демонстрирую
 
@@ -23,9 +23,9 @@
 
 ## Запуск проекта
 
-Требуются Python 3.12+, Node.js 22+, pnpm 11 и Chromium для UI-проверки. Сначала распакуйте архив, затем выполните команды из папки `qa-api-portfolio/`:
+Требуются Python 3.12+, Node.js 22+, pnpm 11 и Chromium для UI-проверки. Для полного запуска распакуйте архив и выполните команды из папки qa-api-portfolio/:
 
-```bash
+~~~bash
 unzip qa-api-testing-portfolio-unified.zip
 cd qa-api-portfolio
 python -m venv .venv
@@ -34,17 +34,17 @@ python -m pip install -r requirements.txt
 python -m playwright install chromium
 pnpm install --frozen-lockfile
 mkdir -p artifacts
-```
+~~~
 
 Запуск проверок по отдельности:
 
-```bash
+~~~bash
 python -m pytest api_tests -m api
 pnpm test:postman
 python -m pytest ui_tests -m ui
-```
+~~~
 
-Чтобы посмотреть коллекцию вручную, импортируйте `postman/restful-booker.collection.json` в Postman. Файл окружения можно импортировать отдельно.
+Чтобы посмотреть коллекцию вручную, импортируйте postman/restful-booker.collection.json из распакованного проекта в Postman. Файл окружения можно импортировать отдельно.
 
 ## Ограничения
 
