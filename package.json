@@ -1,0 +1,14 @@
+{
+  "name": "qa-api-testing-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API and UI testing portfolio with Postman, Newman, pytest, Playwright, and SQL examples",
+  "scripts": {
+    "test:postman": "newman run postman/restful-booker.collection.json --reporters cli,junit --reporter-junit-export artifacts/newman.xml",
+    "test:api": "python -m pytest api_tests -m api --junitxml=artifacts/api-junit.xml",
+    "test:ui": "python -m pytest ui_tests -m ui --junitxml=artifacts/ui-junit.xml"
+  },
+  "devDependencies": {
+    "newman": "^6.2.1"
+  }
+}

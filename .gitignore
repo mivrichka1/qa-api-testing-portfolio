@@ -1,0 +1,6 @@
+.venv/
+node_modules/
+artifacts/
+.pytest_cache/
+__pycache__/
+*.py[cod]
